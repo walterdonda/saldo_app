@@ -1,18 +1,28 @@
-# -*- coding: utf-8 -*-
+from odoo import fields, models
 
-# from odoo import models, fields, api
+class Movimiento(models.Model):
+    _name = 'saldo_app.movimiento'
+    _description = 'Movimiento'
 
+    name = fields.Char('Nombre')
+    move_type = fields.Selection([
+        ('ingreso', 'Ingreso'),
+        ('egreso', 'Egreso')
 
-# class saldo_app(models.Model):
-#     _name = 'saldo_app.saldo_app'
-#     _description = 'saldo_app.saldo_app'
+    ], string='Tipo de movimiento')
+    date = fields.Datetime(string= 'Fecha de movimiento')
+    move_amount = fields.Float('Monto del movimiento')
+    receipt_image = fields.Binary('Imagen adjunta del recibo')
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
+class Category(models.Model):
+    _name = 'saldo_app.category'
+    _description = 'Categoría'
+
+    name = fields.Char('Nombre')
+
+class Tag(models.Model):
+    _name = 'saldo_app.tag'
+    _description = 'Tag'
+
+    name = fields.Char('Nombre')
+        
