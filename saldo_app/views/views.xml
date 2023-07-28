@@ -10,14 +10,14 @@
     <field name="context">{}</field>
   </record>
   <record id="saldo_app.category_action" model="ir.actions.act_window">
-    <field name="name">Movimientos</field>
+    <field name="name">Categorías</field>
     <field name="res_model">saldo_app.category</field>
     <field name="view_mode">tree,form</field>
     <field name="domain">[]</field>
     <field name="context">{}</field>
   </record>
   <record id="saldo_app.tag_action" model="ir.actions.act_window">
-    <field name="name">Movimientos</field>
+    <field name="name">Etiquetas/Tags</field>
     <field name="res_model">saldo_app.tag</field>
     <field name="view_mode">tree,form</field>
     <field name="domain">[]</field>
@@ -29,7 +29,8 @@
   <menuitem id="saldo_app_menu" name="Saldo APP" sequence="10" action="saldo_app.movimiento_action"/>
   <!-- Declaro los sub-menues -->
   <menuitem id="saldo_app_movimientos_menu" name="Movimientos" action="saldo_app.movimiento_action" parent="saldo_app_menu" sequence="10"/>
-  <menuitem id="saldo_app_categoria_menu" name="Categorías" action="saldo_app.category_action" parent="saldo_app_menu" sequence="11"/>
-  <menuitem id="saldo_app_tags_menu" name="Etiquetas" action="saldo_app.tag_action" parent="saldo_app_menu" sequence="12"/>
+  <menuitem id="saldo_app_ajustes_menu" name="Ajustes" parent="saldo_app_menu" sequence="15"/>
+  <menuitem id="saldo_app_categoria_menu" name="Categorías" action="saldo_app.category_action" parent="saldo_app_ajustes_menu" sequence="15"/>
+  <menuitem id="saldo_app_tags_menu" name="Etiquetas" action="saldo_app.tag_action" parent="saldo_app_ajustes_menu" sequence="10"/>
 
 </odoo>
