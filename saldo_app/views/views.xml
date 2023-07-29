@@ -23,14 +23,51 @@
     <field name="domain">[]</field>
     <field name="context">{}</field>
   </record>
-  <!-- Declaro los menú de usuario -->
+  <!-- Declaro los diferentes menú de usuario -->
   
   <!-- Menú principal -->
   <menuitem id="saldo_app_menu" name="Saldo APP" sequence="10" action="saldo_app.movimiento_action"/>
-  <!-- Declaro los sub-menues -->
+  <!-- Declaro los sub-menus, a cada uno se le asigna una secuencia para poder ordenarlos -->
   <menuitem id="saldo_app_movimientos_menu" name="Movimientos" action="saldo_app.movimiento_action" parent="saldo_app_menu" sequence="10"/>
   <menuitem id="saldo_app_ajustes_menu" name="Ajustes" parent="saldo_app_menu" sequence="15"/>
   <menuitem id="saldo_app_categoria_menu" name="Categorías" action="saldo_app.category_action" parent="saldo_app_ajustes_menu" sequence="15"/>
   <menuitem id="saldo_app_tags_menu" name="Etiquetas" action="saldo_app.tag_action" parent="saldo_app_ajustes_menu" sequence="10"/>
+
+  <!-- Declaro la vista formulario -->
+  <record id="movimientos_view_form" model="ir.ui.view">
+    <field name="name">movimientos.view.form</field>
+    <field name="model">saldo_app.movimiento</field>
+    <field name="arch" type="xml">
+      <form string="Movimiento financiero">
+        <sheet>
+          <group name="primer grupo">
+            <field name="name" widget="text" />
+          </group>
+
+          <group name="segundo grupo">
+            <group name="columna izquierda" string="Datos básicos del movimiento">
+              <field name="move_type" widget="radio" />
+              <field name="move_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/> 
+              <field name="date" /> 
+            </group>
+
+            <group name="columna derecha" string="Datos complementarios del movimiento">
+              <field name="tag_ids" widget="many2many_tags" />
+              <field name="currency_id" />
+              <field name="category_id" />
+            </group>  
+          </group>
+          <group name="notas" >
+            <field name="notas" />
+          </group>
+          <group name="imagen" string="Adjuntos">
+            <field name="receipt_image" widget="image" />
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+
 
 </odoo>
