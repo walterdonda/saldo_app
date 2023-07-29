@@ -25,10 +25,12 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'static/description/logo-saldo-color.svg'
         'security/ir_model_access.xml',
         'views/views.xml',
         'views/templates.xml',
+    ],
+    'images': [
+        'static/description/icon.png',
     ],
     # only loaded in demonstration mode
     'demo': [

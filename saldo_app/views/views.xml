@@ -26,7 +26,7 @@
   <!-- Declaro los diferentes menú de usuario -->
   
   <!-- Menú principal -->
-  <menuitem id="saldo_app_menu" name="Saldo APP" sequence="10" action="saldo_app.movimiento_action"/>
+  <menuitem id="saldo_app_menu" name="Saldo APP" sequence="10" action="saldo_app.movimiento_action" web_icon="saldo_app,static/description/icon.png"/>
   <!-- Declaro los sub-menus, a cada uno se le asigna una secuencia para poder ordenarlos -->
   <menuitem id="saldo_app_movimientos_menu" name="Movimientos" action="saldo_app.movimiento_action" parent="saldo_app_menu" sequence="10"/>
   <menuitem id="saldo_app_ajustes_menu" name="Ajustes" parent="saldo_app_menu" sequence="15"/>
