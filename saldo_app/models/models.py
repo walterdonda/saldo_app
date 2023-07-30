@@ -1,9 +1,10 @@
-from odoo import fields, models
+from odoo import fields, models, api
 
 class Movimiento(models.Model):
     _name = 'saldo_app.movimiento'
     _description = 'Movimiento'
-
+    _inherit = "mail.thread"
+    
     name = fields.Char(string = 'Descripción')
     move_type = fields.Selection([
         ('ingreso', 'Ingreso'),
