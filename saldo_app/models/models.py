@@ -8,15 +8,16 @@ class Movimiento(models.Model):
     name = fields.Char(string = 'Descripción')
     move_type = fields.Selection([
         ('ingreso', 'Ingreso'),
-        ('egreso', 'Egreso')], string='Tipo de movimiento')
-    date = fields.Date('Fecha del movimiento')
-    move_amount = fields.Monetary(string ='Monto')
-    currency_id = fields.Many2one('res.currency', string='Moneda', default=lambda self: self.env.company.currency_id)
-    receipt_image = fields.Binary('Imagen adjunta del recibo')
+        ('egreso', 'Egreso')], string='Tipo de movimiento', tracking = True)
+    date = fields.Date('Fecha del movimiento', tracking = True)
+    move_amount = fields.Monetary(string ='Monto', tracking = True)
+    company_id = fields.Many2one('res.company', string= 'Empresa', default = lambda self: self.env.company.id)
+    currency_id = fields.Many2one('res.currency', string='Moneda', default=lambda self: self.env.company.currency_id, tracking = True)
+    receipt_image = fields.Binary('Imagen adjunta del recibo', tracking = True)
     user_id = fields.Many2one('res.users', string='Usuario')
     category_id = fields.Many2one('saldo_app.category', string='Categoría')
     tag_ids = fields.Many2many('saldo_app.tag', string='Etiquetas')
-    notas = fields.Html('Notas')
+    notas = fields.Html('Notas', tracking = True)
 
 class Category(models.Model):
     _name = 'saldo_app.category'
