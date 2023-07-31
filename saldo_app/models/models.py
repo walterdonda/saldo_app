@@ -34,6 +34,7 @@ class Tag(models.Model):
 class ResUsers(models.Model):
     _inherit = 'res.users'
     movimiento_ids = fields.One2many('saldo_app.movimiento', 'user_id', string='Movimientos')
+
     
     
         

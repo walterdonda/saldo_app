@@ -24,7 +24,7 @@
     <field name="context">{}</field>
   </record>
   <!-- Declaro los diferentes menú de usuario -->
-  
+
   <!-- Menú principal -->
   <menuitem id="saldo_app_menu" name="Saldo APP" sequence="10" action="saldo_app.movimiento_action" web_icon="saldo_app,static/description/icon.png"/>
   <!-- Declaro los sub-menus, a cada uno se le asigna una secuencia para poder ordenarlos -->
@@ -47,17 +47,17 @@
           <group name="segundo grupo">
             <group name="columna izquierda" string="Datos básicos del movimiento">
               <field name="move_type" widget="radio" />
-              <field name="move_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/> 
-              <field name="date" /> 
+              <field name="move_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+              <field name="date" />
             </group>
 
             <group name="columna derecha" string="Datos complementarios del movimiento">
               <field name="tag_ids" widget="many2many_tags" />
               <field name="currency_id" />
               <field name="category_id" />
-            </group>  
+            </group>
           </group>
-          <group name="notas" >
+          <group name="notas">
             <field name="notas" />
           </group>
           <group name="imagen" string="Adjuntos">
@@ -65,14 +65,52 @@
           </group>
         </sheet>
         <div class="oe_chatter">
-        <field name="message_follower_ids" widget="mail_followers"/>
-        <!-- <field name="activity_ids" widget="mail_activity"/> -->
-        <field name="message_ids" widget="mail_thread"/>
-      </div>
+          <field name="message_follower_ids" widget="mail_followers"/>
+          <!-- <field name="activity_ids" widget="mail_activity"/> -->
+          <field name="message_ids" widget="mail_thread"/>
+        </div>
       </form>
-      
+
     </field>
   </record>
+
+  <!-- Declaro la vista tree o lista -->
+  <record id="saldo_app.movimientos_view_tree" model="ir.ui.view">
+    <field name="name">saldo_app.movimientos.view.tree</field>
+    <field name="model">saldo_app.movimiento</field>
+    <field name="arch" type="xml">
+      <tree string="Movimientos de cuenta" decoration-success="move_type == 'ingreso'" decoration-danger="move_type == 'egreso'" >
+        <field name="date"/>
+        <field name="name"/>
+        <field name="move_type"/>
+        <field name="move_amount" widget="monetary" options="{'currency_field':'currency_id'}" />
+        <field name="currency_id" invisible = "1" />
+        <field name="category_id" optional="hide" />
+        <field name="tag_ids" optional="hide" widget='many2many_tags' />
+        <field name="notas" optional="hide" />
+
+      </tree>
+    </field>
+  </record>
+  
+  <!-- Declaro la vista search con los campos que necesito -->
+  <record id="saldo_app.movimiento_view_search" model="ir.ui.view">
+    <field name="name">saldo_app.movimiento.view.search</field>
+    <field name="model">saldo_app.movimiento</field>
+    <field name="arch" type="xml">
+      <search string="">
+        <field name="name" />
+        <field name="category_id" />
+        <field name="tag_ids" />
+        <field name="move_type" />
+        <!-- Añado filtros personalizados -->
+        <filter name="saldo_app.movimiento_ingresos" string="Solo ingresos" domain="[('move_type', '=', 'ingreso')]"  />
+        <filter name="saldo_app.movimiento_egresos" string="Solo egresos" domain="[('move_type', '=', 'egreso')]"  />
+        <filter name="saldo_app.movimientos_de_hoy" string="Movimientos de hoy" domain="[('date', '&gt;', 'TODAY')]" />
+      </search>
+    </field>
+  </record>
+  
 
 
 
