@@ -106,7 +106,7 @@
         <!-- Añado filtros personalizados -->
         <filter name="saldo_app.movimiento_ingresos" string="Solo ingresos" domain="[('move_type', '=', 'ingreso')]"  />
         <filter name="saldo_app.movimiento_egresos" string="Solo egresos" domain="[('move_type', '=', 'egreso')]"  />
-        <filter name="saldo_app.movimientos_de_hoy" string="Movimientos de hoy" domain="[('date', '&gt;', 'TODAY')]" />
+        <filter name="saldo_app.movimientos_de_hoy" string="Movimientos de hoy" domain="[('date', '=', 'TODAY')]" />
       </search>
     </field>
   </record>
