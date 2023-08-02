@@ -33,7 +33,7 @@
   <menuitem id="saldo_app_categoria_menu" name="Categorías" action="saldo_app.category_action" parent="saldo_app_ajustes_menu" sequence="15"/>
   <menuitem id="saldo_app_tags_menu" name="Etiquetas" action="saldo_app.tag_action" parent="saldo_app_ajustes_menu" sequence="10"/>
 
-  <!-- Declaro la vista formulario -->
+  <!-- Declaro la vista formulario para movimientos-->
   <record id="movimientos_view_form" model="ir.ui.view">
     <field name="name">movimientos.view.form</field>
     <field name="model">saldo_app.movimiento</field>
@@ -74,12 +74,12 @@
     </field>
   </record>
 
-  <!-- Declaro la vista tree o lista -->
+  <!-- Declaro la vista tree o lista para movimientos -->
   <record id="saldo_app.movimientos_view_tree" model="ir.ui.view">
     <field name="name">saldo_app.movimientos.view.tree</field>
     <field name="model">saldo_app.movimiento</field>
     <field name="arch" type="xml">
-      <tree string="Movimientos de cuenta" decoration-success="move_type == 'ingreso'" decoration-danger="move_type == 'egreso'" >
+      <tree string="Movimientos de cuenta" decoration-success="move_type == 'ingreso'" decoration-danger="move_type == 'egreso'">
         <field name="date"/>
         <field name="name"/>
         <field name="move_type"/>
@@ -92,7 +92,27 @@
       </tree>
     </field>
   </record>
-  
+  <!-- Declaro la vista de formulario para categorías -->
+  <record id="saldo_app.category_view_form" model="ir.ui.view">
+    <field name="name">saldo_app.category.view.form</field>
+    <field name="model">saldo_app.category</field>
+    <field name="arch" type="xml">
+      <form string="">
+        <sheet>
+          <group>
+            <group name="movimientos_por_categoría">
+              <field name="name" />
+              <button string="Ver movimientos" name="ver_movimientos" type="object" class="oe_highlight"/>
+            </group>
+
+          </group>
+
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+
   <!-- Declaro la vista search con los campos que necesito -->
   <record id="saldo_app.movimiento_view_search" model="ir.ui.view">
     <field name="name">saldo_app.movimiento.view.search</field>
@@ -104,13 +124,20 @@
         <field name="tag_ids" />
         <field name="move_type" />
         <!-- Añado filtros personalizados -->
-        <filter name="saldo_app.movimiento_ingresos" string="Solo ingresos" domain="[('move_type', '=', 'ingreso')]"  />
-        <filter name="saldo_app.movimiento_egresos" string="Solo egresos" domain="[('move_type', '=', 'egreso')]"  />
+        <filter name="saldo_app.movimiento_ingresos" string="Solo ingresos" domain="[('move_type', '=', 'ingreso')]" />
+        <filter name="saldo_app.movimiento_egresos" string="Solo egresos" domain="[('move_type', '=', 'egreso')]" />
+        <!-- Separo los filtros por tipo y por fecha -->
+        <separator/>
         <filter name="saldo_app.movimientos_de_hoy" string="Movimientos de hoy" domain="[('date', '=', 'TODAY')]" />
+        <filter name="saldo_app.movimientos_del_mes" string="Movimientos de los últimos 30 días" domain="[('date', '&gt;=',((context_today()-relativedelta(months=1)).strftime('%Y-%m-%d'))), ('date', '&lt;', (context_today()).strftime('%Y-%m-%d'))]" />
+        <!-- Declaro las agrupaciones, por tipo y por fecha -->
+        <filter name="saldo_app.movimientos_agrupados_por _tipo" string="Por tipo de movimiento" context="{'group_by': 'move_type'}" />
+        <separator/>
+        <filter name="saldo_app.movimientos_agrupados_por _fecha" string="Por fecha" context="{'group_by': 'date'}" />
       </search>
     </field>
   </record>
-  
+
 
 
 
