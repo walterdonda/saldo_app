@@ -23,11 +23,20 @@
     <field name="domain">[]</field>
     <field name="context">{}</field>
   </record>
+  <!-- Declaro las acciones de servidor para ejecutar código -->
+  <record id="mi_cuenta_action_server" model="ir.actions.server">
+    <field name="name">Mi cuenta personal</field>
+    <field name="model_id" ref="base.model_res_users"/>
+    <field name="state">code</field>
+    <field name="code">action = model.mi_cuenta()</field>
+  </record>
+  
   <!-- Declaro los diferentes menú de usuario -->
-
   <!-- Menú principal -->
-  <menuitem id="saldo_app_menu" name="Saldo APP" sequence="10" action="saldo_app.movimiento_action" web_icon="saldo_app,static/description/icon.png"/>
+  <menuitem id="saldo_app_menu" name="Saldo APP" sequence="10" action="saldo_app.mi_cuenta_action_server" web_icon="saldo_app,static/description/icon.png"/>
+  
   <!-- Declaro los sub-menus, a cada uno se le asigna una secuencia para poder ordenarlos -->
+  <menuitem id="mi_cuenta_menu" name="Mi cuenta" parent="saldo_app_menu" action="saldo_app.mi_cuenta_action_server" sequence="5"/>
   <menuitem id="saldo_app_movimientos_menu" name="Movimientos" action="saldo_app.movimiento_action" parent="saldo_app_menu" sequence="10"/>
   <menuitem id="saldo_app_ajustes_menu" name="Ajustes" parent="saldo_app_menu" sequence="15"/>
   <menuitem id="saldo_app_categoria_menu" name="Categorías" action="saldo_app.category_action" parent="saldo_app_ajustes_menu" sequence="15"/>
@@ -101,11 +110,11 @@
         <sheet>
           <group>
             <group name="columna_izquierda">
-             <field name="name" /> 
+              <field name="name" />
             </group>
-            
+
             <group name="columna_derecha">
-                <button string="Ver movimientos" name="ver_movimientos" type="object" class="oe_highlight"/>
+              <button string="Ver movimientos" name="ver_movimientos" type="object" class="oe_highlight"/>
             </group>
           </group>
 
@@ -139,8 +148,16 @@
       </search>
     </field>
   </record>
-
-
-
+  
+  <record id="res_users_simplified_form_add_movimientos" model="ir.ui.view">
+    <field name="name">Movimientos en usuario</field>
+    <field name="model">res.users</field>
+    <field name="inherit_id" ref="base.view_users_simple_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="sheet" position="inside">
+        <field name="movimiento_ids" />
+      </xpath>
+    </field>
+</record>
 
 </odoo>
