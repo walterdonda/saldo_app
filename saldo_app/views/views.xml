@@ -100,11 +100,13 @@
       <form string="">
         <sheet>
           <group>
-            <group name="movimientos_por_categoría">
-              <field name="name" />
-              <button string="Ver movimientos" name="ver_movimientos" type="object" class="oe_highlight"/>
+            <group name="columna_izquierda">
+             <field name="name" /> 
             </group>
-
+            
+            <group name="columna_derecha">
+                <button string="Ver movimientos" name="ver_movimientos" type="object" class="oe_highlight"/>
+            </group>
           </group>
 
         </sheet>
