@@ -1,5 +1,6 @@
 from odoo import fields, models, api
 from odoo.exceptions import ValidationError
+from odoo.tools.safe_eval import safe_eval
 
 
 class Movimiento(models.Model):
@@ -46,6 +47,16 @@ class Movimiento(models.Model):
 
         elif(self.move_type == 'egreso'):
             self.name = 'Egreso: '
+    
+    @api.model
+    def create(self, vals):
+        new_movement = self.env['saldo_app.movimiento']
+        move_amount = vals.get("move_amount", 0)
+        move_type = vals.get("move_type","")
+        vals["notas"] = f"""Se realizó una transferencia de tipo <strong>{move_type}</strong> con el monto <strong>{move_amount}</strong>"""
+        new_movement = super(Movimiento, self).create(vals)
+        return new_movement
+
     
         
 class Category(models.Model):
