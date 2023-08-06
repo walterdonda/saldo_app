@@ -28,8 +28,8 @@ class Movimiento(models.Model):
     receipt_image = fields.Binary("Imagen adjunta del recibo", tracking=True)
     user_id = fields.Many2one("res.users", string="Usuario",default=lambda self: self.env.user.id)
     category_id = fields.Many2one("saldo_app.category", string="Categoría")
-    tag_ids = fields.Many2many("saldo_app.tag", string="Etiquetas")
-    notas = fields.Html("Notas", tracking=True)
+    tag_ids = fields.Many2many(comodel_name="saldo_app.tag", string="Etiquetas")
+    notas = fields.Html(string="Notas", )
     user_email = fields.Char(related='user_id.email', string="Correo del usuario")
     
     @api.constrains('move_amount')
