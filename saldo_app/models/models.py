@@ -30,15 +30,24 @@ class Movimiento(models.Model):
     category_id = fields.Many2one("saldo_app.category", string="Categoría")
     tag_ids = fields.Many2many("saldo_app.tag", string="Etiquetas")
     notas = fields.Html("Notas", tracking=True)
+    user_email = fields.Char(related='user_id.email', string="Correo del usuario")
+    
     @api.constrains('move_amount')
     def _constrains_move_amount(self):
         if(self.move_amount < 0):
             raise ValidationError("El monto del movimiento no puede ser menor que 0")
         elif(self.move_amount > 100000):
             raise ValidationError("El monto del movimiento no puede ser mayor que 100000")
+    
+    @api.onchange('move_type')
+    def _onchange_move(self):
+        if(self.move_type == 'ingreso'):
+            self.name = 'Ingreso: '
+
+        elif(self.move_type == 'egreso'):
+            self.name = 'Egreso: '
+    
         
-
-
 class Category(models.Model):
     _name = "saldo_app.category"
     _description = "Categoría"
@@ -78,4 +87,12 @@ class ResUsers(models.Model):
             "views": [[False, "form"]],
             "target": "self"
         }
-        
+    currency_id = fields.Many2one('res.currency', string='Moneda')
+
+    total_ingresos = fields.Monetary(compute='_compute_movimientos', string='Total_ingresos')
+    total_egresos = fields.Monetary(compute='_compute_movimientos', string='total_egresos')
+    @api.depends('movimiento_ids')
+    def _compute_movimientos(self):
+        for record in self:
+            record.total_ingresos = sum(record.movimiento_ids.filtered(lambda m: m.move_type == 'ingreso').mapped("move_amount"))
+            record.total_egresos = sum(record.movimiento_ids.filtered(lambda m: m.move_type == 'egreso').mapped("move_amount"))

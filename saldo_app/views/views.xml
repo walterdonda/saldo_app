@@ -51,6 +51,8 @@
         <sheet>
           <group name="primer grupo">
             <field name="name" widget="text" />
+            <field name="user_id" />
+            <field name="user_email" />
           </group>
 
           <group name="segundo grupo">
@@ -67,7 +69,7 @@
             </group>
           </group>
           <group name="notas">
-            <field name="notas" />
+            <field name="notas" widget="html" options="{'toggle_code': true}" editable="top"/>
           </group>
           <group name="imagen" string="Adjuntos">
             <field name="receipt_image" widget="image" />
@@ -155,7 +157,17 @@
     <field name="inherit_id" ref="base.view_users_simple_form"/>
     <field name="arch" type="xml">
       <xpath expr="sheet" position="inside">
-        <field name="movimiento_ids" />
+        <group name="movimientos" string="Movimientos del usuario">
+          <field name="movimiento_ids" />
+          <field name="total_ingresos" string="Total ingresos" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+          <field name="total_egresos" string= "Total egresos" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+        </group>
+      </xpath>
+      <xpath expr="//field[@name='total_egresos']" position="attributes">
+            <attribute name="style">color: red;</attribute>
+      </xpath>
+      <xpath expr="//field[@name='total_ingresos']" position="attributes">
+            <attribute name="style">color: green;</attribute>
       </xpath>
     </field>
 </record>
