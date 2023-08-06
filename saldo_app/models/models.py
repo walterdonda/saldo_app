@@ -56,6 +56,13 @@ class Movimiento(models.Model):
         vals["notas"] = f"""Se realizó una transferencia de tipo <strong>{move_type}</strong> con el monto <strong>{move_amount}</strong>"""
         new_movement = super(Movimiento, self).create(vals)
         return new_movement
+    
+    def unlink(self):
+        AMOUNT_LIMIT_DELETE = 10000
+        for record in self:
+            if(self.move_amount >= AMOUNT_LIMIT_DELETE):
+                raise ValidationError(f"No puede eliminarse el registro porque supera a ${AMOUNT_LIMIT_DELETE}")
+        return super(Movimiento,self).unlink()
 
     
         
