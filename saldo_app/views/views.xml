@@ -90,7 +90,7 @@
     <field name="name">saldo_app.movimientos.view.tree</field>
     <field name="model">saldo_app.movimiento</field>
     <field name="arch" type="xml">
-      <tree string="Movimientos de cuenta" decoration-success="move_type == 'ingreso'" decoration-danger="move_type == 'egreso'">
+      <tree string="Movimientos de cuenta" default_order="date desc" decoration-success="move_type == 'ingreso'" decoration-danger="move_type == 'egreso'">
         <field name="date"/>
         <field name="name"/>
         <field name="move_type"/>

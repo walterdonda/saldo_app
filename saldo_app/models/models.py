@@ -59,10 +59,12 @@ class Movimiento(models.Model):
     
     def unlink(self):
         AMOUNT_LIMIT_DELETE = 10000
-        for record in self:
-            if(self.move_amount >= AMOUNT_LIMIT_DELETE):
-                raise ValidationError(f"No puede eliminarse el registro porque supera a ${AMOUNT_LIMIT_DELETE}")
-        return super(Movimiento,self).unlink()
+        records_to_not_delete = self.filtered(lambda record: record.move_amount >= AMOUNT_LIMIT_DELETE)
+    
+        if records_to_not_delete:
+            raise ValidationError(f"No se pueden eliminar registros con monto mayor a ${AMOUNT_LIMIT_DELETE}")
+    
+        return super(Movimiento, self - records_to_not_delete).unlink()
 
     
         
