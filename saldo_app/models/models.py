@@ -6,7 +6,7 @@ from odoo.tools.safe_eval import safe_eval
 class Movimiento(models.Model):
     _name = "saldo_app.movimiento"
     _description = "Movimiento"
-    _inherit = "mail.thread"
+    _inherit = ["mail.thread","mail.activity.mixin"]
 
     name = fields.Char(string="Descripción")
     move_type = fields.Selection(
@@ -65,7 +65,7 @@ class Movimiento(models.Model):
             raise ValidationError(f"No se pueden eliminar registros con monto mayor a ${AMOUNT_LIMIT_DELETE}")
     
         return super(Movimiento, self - records_to_not_delete).unlink()
-
+    
     
         
 class Category(models.Model):
@@ -73,6 +73,10 @@ class Category(models.Model):
     _description = "Categoría"
 
     name = fields.Char("Nombre")
+    move_type = fields.Selection([
+        ('ingreso', 'Ingreso'),
+        ('egreso','Egreso')
+    ], string='Tipo de movimiento')
 
     def ver_movimientos(self):
         return{

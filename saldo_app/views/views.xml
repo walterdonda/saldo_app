@@ -65,7 +65,7 @@
             <group name="columna derecha" string="Datos complementarios del movimiento">
               <field name="tag_ids" widget="many2many_tags" />
               <field name="currency_id" />
-              <field name="category_id" />
+              <field name="category_id" domain="[('move_type','=',move_type)]" context="{'default_move_type':move_type}" />
             </group>
           </group>
           <group name="notas">
@@ -77,7 +77,7 @@
         </sheet>
         <div class="oe_chatter">
           <field name="message_follower_ids" widget="mail_followers"/>
-          <!-- <field name="activity_ids" widget="mail_activity"/> -->
+          <field name="activity_ids" widget="mail_activity"/>
           <field name="message_ids" widget="mail_thread"/>
         </div>
       </form>
@@ -113,6 +113,7 @@
           <group>
             <group name="columna_izquierda">
               <field name="name" />
+              <field name="move_type" />
             </group>
 
             <group name="columna_derecha">
