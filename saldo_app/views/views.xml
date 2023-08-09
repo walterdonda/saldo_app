@@ -9,6 +9,13 @@
     <field name="domain">[]</field>
     <field name="context">{}</field>
   </record>
+  <record id="saldo_app.movimiento_action_solo_ingresos" model="ir.actions.act_window">
+    <field name="name">Solo ingresos</field>
+    <field name="res_model">saldo_app.movimiento</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain">"[('move_type','=','ingreso')]"</field>
+    <field name="context">{}</field>
+  </record> 
   <record id="saldo_app.category_action" model="ir.actions.act_window">
     <field name="name">Categorías</field>
     <field name="res_model">saldo_app.category</field>
@@ -37,7 +44,9 @@
   
   <!-- Declaro los sub-menus, a cada uno se le asigna una secuencia para poder ordenarlos -->
   <menuitem id="mi_cuenta_menu" name="Mi cuenta" parent="saldo_app_menu" action="saldo_app.mi_cuenta_action_server" sequence="5"/>
-  <menuitem id="saldo_app_movimientos_menu" name="Movimientos" action="saldo_app.movimiento_action" parent="saldo_app_menu" sequence="10"/>
+  <menuitem id="saldo_app_movimientos_menu" name="Movimientos" parent="saldo_app_menu" sequence="10"/>
+  <menuitem id="saldo_app_movimientos_menu_solo_ingresos" name="Solo ingresos" action="saldo_app.movimiento_action_solo_ingresos" parent="saldo_app_movimientos_menu" sequence="10"/>
+
   <menuitem id="saldo_app_ajustes_menu" name="Ajustes" parent="saldo_app_menu" sequence="15"/>
   <menuitem id="saldo_app_categoria_menu" name="Categorías" action="saldo_app.category_action" parent="saldo_app_ajustes_menu" sequence="15"/>
   <menuitem id="saldo_app_tags_menu" name="Etiquetas" action="saldo_app.tag_action" parent="saldo_app_ajustes_menu" sequence="10"/>
@@ -151,7 +160,7 @@
       </search>
     </field>
   </record>
-  
+  <!-- Declaro herencia del formulario simplificado de usuario para agregarle los movimientos -->
   <record id="res_users_simplified_form_add_movimientos" model="ir.ui.view">
     <field name="name">Movimientos en usuario</field>
     <field name="model">res.users</field>
