@@ -5,7 +5,7 @@
   <record id="saldo_app.movimiento_action" model="ir.actions.act_window">
     <field name="name">Movimientos</field>
     <field name="res_model">saldo_app.movimiento</field>
-    <field name="view_mode">tree,form</field>
+    <field name="view_mode">tree,form,calendar</field>
     <field name="domain">[]</field>
     <field name="context">{}</field>
   </record>
@@ -109,6 +109,18 @@
         <field name="notas" optional="hide" />
 
       </tree>
+    </field>
+  </record>
+  <!-- Declaro vista de calendario en movimiento -->
+  <record id="saldo_app.movimiento_view_calendar" model="ir.ui.view">
+    <field name="name">saldo_app.view.calendar</field>
+    <field name="model">saldo_app.movimiento</field>
+    <field name="arch" type="xml">
+      <calendar string="Ver fecha de movimientos" date_start="date" mode="month" color="user_id">
+        <field name="user_id" />
+        <field name="name" />
+        <field name="move_amount" />
+      </calendar>
     </field>
   </record>
   <!-- Declaro la vista de formulario para categorías -->
