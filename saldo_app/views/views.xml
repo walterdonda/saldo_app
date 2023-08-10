@@ -146,6 +146,7 @@
         <field name="category_id" />
         <field name="tag_ids" />
         <field name="move_type" />
+        <field name="move_amount" />
         <!-- Añado filtros personalizados -->
         <filter name="saldo_app.movimiento_ingresos" string="Solo ingresos" domain="[('move_type', '=', 'ingreso')]" />
         <filter name="saldo_app.movimiento_egresos" string="Solo egresos" domain="[('move_type', '=', 'egreso')]" />
