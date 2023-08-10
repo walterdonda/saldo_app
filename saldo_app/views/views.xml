@@ -15,7 +15,7 @@
     <field name="view_mode">tree,form</field>
     <field name="domain">"[('move_type','=','ingreso')]"</field>
     <field name="context">{}</field>
-    <field name="search_view_id" ref="saldo_app.movimiento_search_reducida" />
+    <!-- <field name="search_view_id" ref="saldo_app.movimiento_search_reducida" /> -->
   </record> 
   <record id="saldo_app.category_action" model="ir.actions.act_window">
     <field name="name">Categorías</field>
