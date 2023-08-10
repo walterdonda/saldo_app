@@ -15,6 +15,7 @@
     <field name="view_mode">tree,form</field>
     <field name="domain">"[('move_type','=','ingreso')]"</field>
     <field name="context">{}</field>
+    <field name="search_view_id" ref="saldo_app.movimiento_search_reducida" />
   </record> 
   <record id="saldo_app.category_action" model="ir.actions.act_window">
     <field name="name">Categorías</field>
@@ -44,9 +45,7 @@
   
   <!-- Declaro los sub-menus, a cada uno se le asigna una secuencia para poder ordenarlos -->
   <menuitem id="mi_cuenta_menu" name="Mi cuenta" parent="saldo_app_menu" action="saldo_app.mi_cuenta_action_server" sequence="5"/>
-  <menuitem id="saldo_app_movimientos_menu" name="Movimientos" parent="saldo_app_menu" sequence="10"/>
-  <menuitem id="saldo_app_movimientos_menu_solo_ingresos" name="Solo ingresos" action="saldo_app.movimiento_action_solo_ingresos" parent="saldo_app_movimientos_menu" sequence="10"/>
-
+  <menuitem id="saldo_app_movimientos_menu" name="Movimientos" action="saldo_app.movimiento_action" parent="saldo_app_menu" sequence="10"/>
   <menuitem id="saldo_app_ajustes_menu" name="Ajustes" parent="saldo_app_menu" sequence="15"/>
   <menuitem id="saldo_app_categoria_menu" name="Categorías" action="saldo_app.category_action" parent="saldo_app_ajustes_menu" sequence="15"/>
   <menuitem id="saldo_app_tags_menu" name="Etiquetas" action="saldo_app.tag_action" parent="saldo_app_ajustes_menu" sequence="10"/>
@@ -136,7 +135,7 @@
   </record>
 
 
-  <!-- Declaro la vista search con los campos que necesito -->
+  <!-- Declaro la vista search primaria con los campos que necesito -->
   <record id="saldo_app.movimiento_view_search" model="ir.ui.view">
     <field name="name">saldo_app.movimiento.view.search</field>
     <field name="model">saldo_app.movimiento</field>
@@ -158,6 +157,25 @@
         <filter name="saldo_app.movimientos_agrupados_por _tipo" string="Por tipo de movimiento" context="{'group_by': 'move_type'}" />
         <separator/>
         <filter name="saldo_app.movimientos_agrupados_por _fecha" string="Por fecha" context="{'group_by': 'date'}" />
+      </search>
+    </field>
+  </record>
+  <!-- Duplico la vista search para que no filtre por tipo de movimiento en ingresos -->
+  <record id="movimiento_search_reducida" model="ir.ui.view">
+    <field name="name">saldo_app.movimiento.view.search.reducida</field>
+    <field name="model">saldo_app.movimiento</field>
+    <field name="arch" type="xml">
+      <search string="">
+        <field name="name" />
+        <field name="category_id" />
+        <field name="tag_ids" />
+        <field name="move_type" />
+        <field name="move_amount" />
+        <!-- Añado filtros personalizados -->
+        <filter name="saldo_app.movimientos_de_hoy" string="Movimientos de hoy" domain="[('date', '=', 'TODAY')]" />
+        <filter name="saldo_app.movimientos_del_mes" string="Movimientos de los últimos 30 días" domain="[('date', '&gt;=',((context_today()-relativedelta(months=1)).strftime('%Y-%m-%d'))), ('date', '&lt;', (context_today()).strftime('%Y-%m-%d'))]" />
+        <!-- Declaro las agrupaciones, por tipo y por fecha -->
+        <filter name="saldo_app.movimientos_agrupados_por _monto" string="Por tipo de movimiento" context="{'group_by': 'move_amount'}" />
       </search>
     </field>
   </record>
