@@ -4,8 +4,8 @@
     <record id="module_saldo_app" model="ir.module.category">
         <field name="name">Saldo APP</field>
     </record>
-    <record id="res_groups_saldo_app_admin" model="res.groups">
-        <field name="name">Administrador</field>
+    <record id="res_groups_saldo_app_user" model="res.groups">
+        <field name="name">Usuario común</field>
         <field name="category_id" ref="saldo_app.module_saldo_app" />
     </record>
 
