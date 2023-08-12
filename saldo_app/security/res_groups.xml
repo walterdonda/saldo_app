@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="module_saldo_app" model="ir.module.category">
+        <field name="name">Saldo APP</field>
+    </record>
+    <record id="res_groups_saldo_app_admin" model="res.groups">
+        <field name="field_name">Administrador</field>
+        <field name="category_id" ref="saldo_app.module_saldo_app" />
+    </record>
+
+</odoo>
