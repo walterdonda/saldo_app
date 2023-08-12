@@ -20,12 +20,12 @@ class Movimiento(models.Model):
         "res.company", string="Empresa", default=lambda self: self.env.company.id
     )
     currency_id = fields.Many2one(
-        "res.currency",
+        comodel_name="res.currency",
         string="Moneda",
         default=lambda self: self.env.company.currency_id,
         tracking=True,
     )
-    receipt_image = fields.Binary("Imagen adjunta del recibo", tracking=True)
+    receipt_image = fields.Binary(string="Imagen adjunta del recibo", tracking=True)
     user_id = fields.Many2one("res.users", string="Usuario",default=lambda self: self.env.user.id)
     category_id = fields.Many2one("saldo_app.category", string="Categoría")
     tag_ids = fields.Many2many(comodel_name="saldo_app.tag", string="Etiquetas")
