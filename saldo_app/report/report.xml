@@ -19,8 +19,8 @@
         <record id="action_report_detalle_movimiento" model="ir.actions.report">
             <field name="name">Detalle de movimiento</field>
             <field name="model">saldo_app.movimiento</field>
-            <field name="report_type">qweb-pdf</field>
-            <field name="report_name">saldo_app.detalle_movimiento</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">saldo_app.report_detalle_movimiento</field>
             <field name="print_report_name">'Detalle de movimiento- %s' % (object.name)</field>
             <field name="binding_model_id" ref="saldo_app.model_saldo_app_movimiento"/>
             <field name="binding_type">report</field>
